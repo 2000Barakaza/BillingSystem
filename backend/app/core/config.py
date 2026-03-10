@@ -21,13 +21,20 @@ class Config:
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "")
     FREE_TIER_LIMIT: int = 2
     PRO_TIER_MEMBERSHIP_LIMIT = 0  # unlimited
+    SECRET_KEY = os.getenv("SECRET_KEY", "")
+
 
     def __init__(self):
         print(f"DEBUG: DATABASE_URL = {self.DATABASE_URL}")
         print(f"DEBUG: All env vars example: CLERK_SECRET_KEY = {self.CLERK_SECRET_KEY}")
         if not self.DATABASE_URL:
             raise ValueError("DATABASE_URL is not set. Add it to .env like 'mysql+pymysql://user:pass@host:port/db'")
+ 
 
+
+    class Config:
+        env_file = ".env"
+        case_sensitive = True
 
 # ←←← This must stay at the very bottom
 settings = Config()
